@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Fragments"
+        android:theme="@style/Theme.RecyclerView"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -20,28 +20,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <action android:name="string" />
 
-            <category android:name="string" />
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-
-            <data android:scheme="string"
-                android:host="string"
-                android:port="string"
-                android:path="string"
-                android:pathPattern="string"
-                android:pathPrefix="string"
-                android:mimeType="string" />S
         </activity>
-
-
-        <intent-filter
-            android:icon="drawable resource"
-            android:label="string resource"
-            android:priority="integer" >
-        </intent-filter>
     </application>
 
 </manifest>
