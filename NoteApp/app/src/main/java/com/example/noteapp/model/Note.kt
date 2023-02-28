@@ -1,17 +1,20 @@
 package com.example.noteapp.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "notesTable")
+@Parcelize
 data class Note(
     @ColumnInfo(name = "title")
-    val title: String,
+    var title: String,
     @ColumnInfo(name = "description")
-    val description: String,
+    var description: String,
     @ColumnInfo(name = "isDone")
     var isDone: Boolean
-) {
+) : Parcelable {
     @PrimaryKey(autoGenerate = true) var id = 0
 }

@@ -1,5 +1,6 @@
 package com.example.noteapp.adapter
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +12,8 @@ import com.example.noteapp.model.Note
 class NoteAdapter(
     private val notes: ArrayList<Note>,
     private val onDelete: (Note) -> Unit,
-    private val onUpdate: (Note) -> Unit
+    private val onUpdate: (Note) -> Unit,
+    private val onEdit: (Note) -> Unit
 ): RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: NoteBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -21,8 +23,11 @@ class NoteAdapter(
             binding.delete.setOnClickListener {
                 onDelete(note)
             }
+            binding.edit.setOnClickListener {
+                onEdit(note)
+            }
+            binding.checkBox.isChecked = note.isDone
             if (note.isDone) {
-                binding.checkBox.isChecked = true
                 binding.title.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 binding.des.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             }
@@ -32,7 +37,6 @@ class NoteAdapter(
             }
         }
     }
-
 
     class NoteCallback(private val oldList: List<Note>, private val newList: List<Note>) : DiffUtil.Callback() {
 
@@ -45,7 +49,7 @@ class NoteAdapter(
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
+            return oldList[oldItemPosition] === newList[newItemPosition]
         }
 
     }
@@ -62,7 +66,6 @@ class NoteAdapter(
         holder.bindNote(note)
     }
 
-
     fun setNote(newList: List<Note>) {
         val diffCallback = NoteCallback(notes, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -70,6 +73,4 @@ class NoteAdapter(
         notes.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
     }
-
-
 }

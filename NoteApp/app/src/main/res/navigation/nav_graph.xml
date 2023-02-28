@@ -16,7 +16,13 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.noteapp.ui.AddFragment"
+        android:name="com.example.noteapp.ui.EditFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_edit" >
+        <argument
+            android:name="note"
+            app:argType="com.example.noteapp.model.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

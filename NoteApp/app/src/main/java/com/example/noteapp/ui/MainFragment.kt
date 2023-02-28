@@ -1,12 +1,15 @@
 package com.example.noteapp.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.R
 import com.example.noteapp.adapter.NoteAdapter
@@ -32,10 +35,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = NoteAdapter(arrayListOf(), onDelete, onUpdate)
+        adapter = NoteAdapter(arrayListOf(), onDelete, onUpdate, onEdit)
         initRecyclerView()
         binding.addButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_addFragment)
+            findNavController().navigate(R.id.action_mainFragment_to_addFragment)
         }
         noteViewModel.allNotes.observe(viewLifecycleOwner) {
             adapter.setNote(it)
@@ -48,6 +51,11 @@ class MainFragment : Fragment() {
 
     private val onUpdate: (Note) -> Unit = { note ->
         noteViewModel.updateNote(note)
+    }
+
+    private val onEdit: (Note) -> Unit = { note ->
+        val action =  MainFragmentDirections.actionMainFragmentToAddFragment(note)
+        findNavController().navigate(action)
     }
 
     private fun initRecyclerView() {
