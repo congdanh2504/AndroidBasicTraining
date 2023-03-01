@@ -1,14 +1,11 @@
 package com.example.noteapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.R
@@ -35,11 +32,24 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = NoteAdapter(arrayListOf(), onDelete, onUpdate, onEdit)
         initRecyclerView()
+        initActions()
+        initObserve()
+    }
+
+    private fun initRecyclerView() {
+        adapter = NoteAdapter(arrayListOf(), onDelete, onUpdate, onEdit)
+        binding.recyclerNote.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerNote.adapter = adapter
+    }
+
+    private fun initActions() {
         binding.addButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_addFragment)
+            findNavController().navigate(R.id.action_mainFragment_to_editFragment)
         }
+    }
+
+    private fun initObserve() {
         noteViewModel.allNotes.observe(viewLifecycleOwner) {
             adapter.setNote(it)
         }
@@ -54,12 +64,7 @@ class MainFragment : Fragment() {
     }
 
     private val onEdit: (Note) -> Unit = { note ->
-        val action =  MainFragmentDirections.actionMainFragmentToAddFragment(note)
+        val action =  MainFragmentDirections.actionMainFragmentToEditFragment(note)
         findNavController().navigate(action)
-    }
-
-    private fun initRecyclerView() {
-        binding.recyclerNote.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerNote.adapter = adapter
     }
 }

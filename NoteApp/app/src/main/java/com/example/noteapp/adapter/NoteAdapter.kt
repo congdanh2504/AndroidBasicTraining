@@ -14,31 +14,35 @@ class NoteAdapter(
     private val onDelete: (Note) -> Unit,
     private val onUpdate: (Note) -> Unit,
     private val onEdit: (Note) -> Unit
-): RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: NoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: NoteBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bindNote(note: Note) {
             binding.title.text = note.title
             binding.des.text = note.description
+
             binding.delete.setOnClickListener {
                 onDelete(note)
             }
             binding.edit.setOnClickListener {
                 onEdit(note)
             }
-            binding.checkBox.isChecked = note.isDone
-            if (note.isDone) {
-                binding.title.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                binding.des.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-            }
             binding.checkBox.setOnClickListener {
                 note.isDone = !note.isDone
                 onUpdate(note)
             }
+
+            binding.checkBox.isChecked = note.isDone
+            binding.title.paintFlags =
+                if (note.isDone) Paint.STRIKE_THRU_TEXT_FLAG else binding.title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            binding.des.paintFlags =
+                if (note.isDone) Paint.STRIKE_THRU_TEXT_FLAG else binding.title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 
-    class NoteCallback(private val oldList: List<Note>, private val newList: List<Note>) : DiffUtil.Callback() {
+    class NoteCallback(private val oldList: List<Note>, private val newList: List<Note>) :
+        DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldList.size
 
@@ -51,7 +55,6 @@ class NoteAdapter(
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             return oldList[oldItemPosition] === newList[newItemPosition]
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

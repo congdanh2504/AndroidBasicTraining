@@ -23,6 +23,8 @@ class EditFragment : Fragment() {
     private lateinit var binding: FragmentEditBinding
     private val noteViewModel: NoteViewModel by activityViewModels()
     private val args: EditFragmentArgs by navArgs()
+    private var note: Note = Note("", "", false)
+    private var isEdit = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,15 +36,17 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var note = Note("", "", false)
-        var isEdit = false
+
         args.note?.let {
             note = it
             isEdit = true
         }
 
-        binding.titleET.text = SpannableStringBuilder(note.title)
-        binding.descriptionET.text = SpannableStringBuilder(note.description)
+        initText()
+        initActions()
+    }
+
+    private fun initActions() {
         binding.okButton.setOnClickListener {
             note.title = binding.titleET.text.toString()
             note.description = binding.descriptionET.text.toString()
@@ -53,6 +57,11 @@ class EditFragment : Fragment() {
             }
             findNavController().popBackStack()
         }
+    }
+
+    private fun initText() {
+        binding.titleET.text = SpannableStringBuilder(note.title)
+        binding.descriptionET.text = SpannableStringBuilder(note.description)
     }
 
 }
