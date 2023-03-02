@@ -16,9 +16,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/teal_700"
+            android:background="@color/item"
             android:orientation="horizontal"
             android:weightSum="5">
 

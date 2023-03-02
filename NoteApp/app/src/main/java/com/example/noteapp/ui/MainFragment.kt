@@ -64,7 +64,7 @@ class MainFragment : Fragment() {
     }
 
     private val onEdit: (Note) -> Unit = { note ->
-        val action =  MainFragmentDirections.actionMainFragmentToEditFragment(note)
+        val action = MainFragmentDirections.actionMainFragmentToEditFragment(note)
         findNavController().navigate(action)
     }
 }

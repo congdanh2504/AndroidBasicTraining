@@ -2,10 +2,12 @@ package com.example.noteapp.adapter
 
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noteapp.R
 import com.example.noteapp.databinding.NoteBinding
 import com.example.noteapp.model.Note
 
@@ -34,6 +36,7 @@ class NoteAdapter(
             }
 
             binding.checkBox.isChecked = note.isDone
+            binding.layout.setBackgroundResource(if (note.isDone) R.color.mark_item else R.color.item)
             binding.title.paintFlags =
                 if (note.isDone) Paint.STRIKE_THRU_TEXT_FLAG else binding.title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             binding.des.paintFlags =

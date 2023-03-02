@@ -12,14 +12,14 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteViewModel @Inject constructor(
     private val noteRepository: NoteRepository
-): ViewModel() {
-    val allNotes : LiveData<List<Note>> = noteRepository.allNotes
+) : ViewModel() {
+    val allNotes: LiveData<List<Note>> = noteRepository.allNotes
 
-    fun deleteNote (note: Note) = viewModelScope.launch {
+    fun deleteNote(note: Note) = viewModelScope.launch {
         noteRepository.delete(note)
     }
 
-    fun updateNote(note: Note) = viewModelScope.launch{
+    fun updateNote(note: Note) = viewModelScope.launch {
         noteRepository.update(note)
     }
 

@@ -1,6 +1,7 @@
 package com.example.noteapp.model
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -16,5 +17,6 @@ data class Note(
     @ColumnInfo(name = "isDone")
     var isDone: Boolean
 ) : Parcelable {
-    @PrimaryKey(autoGenerate = true) var id = 0
+    @PrimaryKey(autoGenerate = true)
+    var id = 0
 }

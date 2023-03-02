@@ -48,8 +48,11 @@ class EditFragment : Fragment() {
 
     private fun initActions() {
         binding.okButton.setOnClickListener {
+            if (!validateNote()) return@setOnClickListener
+
             note.title = binding.titleET.text.toString()
             note.description = binding.descriptionET.text.toString()
+
             if (isEdit) {
                 noteViewModel.updateNote(note)
             } else {
@@ -62,6 +65,19 @@ class EditFragment : Fragment() {
     private fun initText() {
         binding.titleET.text = SpannableStringBuilder(note.title)
         binding.descriptionET.text = SpannableStringBuilder(note.description)
+    }
+
+    private fun validateNote(): Boolean {
+        var isValid = true
+        if (binding.titleET.text.toString().isBlank()) {
+            binding.titleET.error = "Required"
+            isValid = false
+        }
+        if (binding.descriptionET.text.toString().isBlank()) {
+            binding.descriptionET.error = "Required"
+            isValid = false
+        }
+        return isValid
     }
 
 }
