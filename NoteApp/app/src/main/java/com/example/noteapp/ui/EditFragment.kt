@@ -80,4 +80,18 @@ class EditFragment : Fragment() {
         return isValid
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!validateNote()) return
+
+        note.title = binding.titleET.text.toString()
+        note.description = binding.descriptionET.text.toString()
+
+        if (isEdit) {
+            noteViewModel.updateNote(note)
+        } else {
+            noteViewModel.addNote(note)
+        }
+    }
+
 }
