@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.R
 import com.example.noteapp.adapter.NoteAdapter
+import com.example.noteapp.adapter.NoteAdapter2
 import com.example.noteapp.databinding.FragmentMainBinding
 import com.example.noteapp.model.Note
 import com.example.noteapp.viewmodels.NoteViewModel
@@ -20,7 +21,7 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private val noteViewModel: NoteViewModel by activityViewModels()
-    private lateinit var adapter: NoteAdapter
+    private lateinit var adapter: NoteAdapter2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +39,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        adapter = NoteAdapter(arrayListOf(), onDelete, onUpdate, onEdit)
+        adapter = NoteAdapter2(onDelete, onUpdate, onEdit)
         binding.recyclerNote.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerNote.adapter = adapter
     }
@@ -51,7 +52,7 @@ class MainFragment : Fragment() {
 
     private fun initObserve() {
         noteViewModel.allNotes.observe(viewLifecycleOwner) {
-            adapter.setNote(it)
+            adapter.submitList(it)
         }
     }
 
