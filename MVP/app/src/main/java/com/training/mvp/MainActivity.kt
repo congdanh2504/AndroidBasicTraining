@@ -15,11 +15,9 @@ class MainActivity : AppCompatActivity(), MyContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         // Create the presenter and model
         val model = MyModel()
         presenter = MyPresenter(this, model)
-
         // Load data from the presenter
         presenter.loadData()
     }
